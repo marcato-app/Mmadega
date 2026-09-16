@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adega MM | Cardápio</title>
+<meta name="description" content="Cardápio digital da Adega MM: cervejas, doses, garrafas, combos, bebidas e tabacaria.">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="welcome" id="welcome" aria-hidden="true">
+  <img src="assets/img/logo.png" alt="" class="welcome-mark">
+  <h2>Adega MM</h2>
+  <p>Bem-vindo</p>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/img/logo.png" alt="Adega MM" class="brand-logo">
+      <span class="brand-text">Adega MM <small>Bebidas &amp; Tabacaria</small></span>
+    </a>
+  </div>
+  <nav class="site-nav" id="siteNav">
+    <a href="#cervejas">Cervejas</a>
+    <a href="#doses">Doses</a>
+    <a href="#garrafas">Garrafas</a>
+    <a href="#combos">Combos</a>
+    <a href="#bebidas">Bebidas</a>
+    <a href="#drinks">Drinks</a>
+    <a href="#tabacaria">Tabacaria</a>
+  </nav>
+</header>
+
+<div id="topo" class="hero">
+  <div class="hero-overlay">
+    <img src="assets/img/logo.png" alt="" class="hero-logo">
+    <h1>Cardápio</h1>
+    <p>Adega MM</p>
+  </div>
+</div>
+
+<div class="search-bar">
+  <input type="search" id="menuSearch" placeholder="Buscar: gin, cerveja, whisky…">
+</div>
+
+<main>
+  <div id="menuRoot" class="loading">
+    <p class="loading-msg">Carregando cardápio...</p>
+  </div>
+  <p id="noResults" class="no-results hidden">Nenhum item encontrado.</p>
+</main>
+
+<footer class="site-footer">
+  <img src="assets/img/logo.png" alt="Adega MM" class="footer-logo">
+  <p class="footer-name">Adega MM</p>
+  <a href="https://instagram.com/adegam.m" target="_blank" rel="noopener">@adegam.m</a>
+  <p class="footer-note">Cardápio sujeito a alterações sem aviso prévio.</p>
+</footer>
+
+<a href="#topo" class="back-to-top" id="backToTop" aria-label="Voltar ao topo">↑</a>
+
+<div class="cart-bar hidden" id="cartBar">
+  <button type="button" class="cart-bar-btn" id="cartBarBtn">
+    <span class="cart-bar-icon" aria-hidden="true">🛒</span>
+    <span class="cart-bar-count" id="cartCount">0</span>
+    <span class="cart-bar-label">Ver pedido</span>
+    <span class="cart-bar-total" id="cartTotal">R$ 0,00</span>
+  </button>
+</div>
+
+<div class="cart-overlay hidden" id="cartOverlay"></div>
+<aside class="cart-drawer hidden" id="cartDrawer" aria-label="Seu pedido">
+  <div class="cart-drawer-head">
+    <h2>Seu pedido</h2>
+    <button type="button" class="cart-close" id="cartClose" aria-label="Fechar">&times;</button>
+  </div>
+  <ul class="cart-list hidden" id="cartList"></ul>
+  <p class="cart-empty" id="cartEmpty">Seu carrinho está vazio.</p>
+  <div class="cart-drawer-foot">
+    <div class="cart-drawer-total">
+      <span>Total</span>
+      <span id="cartDrawerTotal">R$ 0,00</span>
+    </div>
+    <button type="button" class="cart-clear hidden" id="cartClearBtn">Limpar pedido</button>
+    <a class="cart-send is-disabled" id="cartSendBtn" target="_blank" rel="noopener">Enviar pedido no WhatsApp</a>
+  </div>
+</aside>
+
+<script src="assets/js/menu-data.js"></script>
+<script src="assets/js/script.js"></script>
+</body>
+</html>
