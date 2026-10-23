@@ -129,8 +129,8 @@ a { color: inherit; }
 }
 
 .hero-lockup {
-  width: 72%;
-  max-width: 320px;
+  width: 56%;
+  max-width: 220px;
   height: auto;
   margin: 0 auto;
   filter: drop-shadow(0 14px 34px rgba(244, 80, 10, 0.25));
