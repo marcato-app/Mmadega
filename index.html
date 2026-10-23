@@ -7,21 +7,21 @@
 <meta name="description" content="Cervejas, doses, garrafas, combos e tabacaria. Peça pelo WhatsApp.">
 <meta property="og:title" content="Adega MM">
 <meta property="og:description" content="Cervejas, doses, garrafas, combos e tabacaria.">
-<meta property="og:image" content="assets/img/logo.png">
+<meta property="og:image" content="assets/img/lockup.jpg">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600&display=swap">
 <style>
   :root {
-    --ink: #141110;
-    --orange: #fa7d27;
-    --orange-light: #ff9a4d;
+    --ink: #090602;
+    --orange: #f4500a;
+    --orange-light: #ff8a4a;
     --text: #f7ede2;
     --text-dim: #ab9a8c;
-    --hairline: rgba(250, 125, 39, 0.2);
+    --hairline: rgba(244, 80, 10, 0.2);
     --glass: rgba(255, 255, 255, 0.035);
   }
 
@@ -34,7 +34,7 @@
     min-height: 100vh;
     min-height: 100dvh;
     background:
-      radial-gradient(120% 70% at 50% -10%, rgba(250,125,39,0.16) 0%, transparent 60%),
+      radial-gradient(120% 70% at 50% -10%, rgba(244,80,10,0.16) 0%, transparent 60%),
       var(--ink);
     color: var(--text);
     font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
@@ -60,29 +60,12 @@
     margin-bottom: 40px;
   }
   .lockup img {
-    width: 108px;
+    width: 82%;
+    max-width: 300px;
     height: auto;
-    margin: 0 auto 18px;
+    margin: 0 auto;
     display: block;
-    border-radius: 50%;
-    box-shadow: 0 10px 30px rgba(250, 125, 39, 0.18);
-  }
-  .wordmark {
-    font-family: 'Pacifico', cursive;
-    font-weight: 400;
-    font-size: 2.5rem;
-    line-height: 1;
-    margin: 0;
-    color: var(--orange);
-  }
-  .sub-mark {
-    margin: 12px 0 0;
-    font-size: 0.62rem;
-    font-weight: 500;
-    letter-spacing: 0.42em;
-    text-indent: 0.42em;
-    text-transform: uppercase;
-    color: var(--text-dim);
+    filter: drop-shadow(0 14px 32px rgba(244, 80, 10, 0.22));
   }
   .rule {
     width: 34px;
@@ -131,10 +114,10 @@
   }
 
   .card.primary {
-    background: linear-gradient(180deg, rgba(250,125,39,0.14) 0%, rgba(250,125,39,0.05) 100%);
-    border-color: rgba(250, 125, 39, 0.4);
+    background: linear-gradient(180deg, rgba(244,80,10,0.14) 0%, rgba(244,80,10,0.05) 100%);
+    border-color: rgba(244, 80, 10, 0.4);
   }
-  .card.primary:hover { border-color: rgba(250, 125, 39, 0.68); }
+  .card.primary:hover { border-color: rgba(244, 80, 10, 0.68); }
 
   .card .icon {
     flex: 0 0 auto;
@@ -182,7 +165,7 @@
   .map-frame {
     position: relative;
     height: 168px;
-    background: #1d1815;
+    background: #140e09;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     overflow: hidden;
   }
@@ -196,7 +179,7 @@
     gap: 9px;
     color: var(--text-dim);
     background:
-      radial-gradient(120% 90% at 50% 40%, rgba(250,125,39,0.1) 0%, transparent 70%),
+      radial-gradient(120% 90% at 50% 40%, rgba(244,80,10,0.1) 0%, transparent 70%),
       repeating-linear-gradient(90deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 34px),
       repeating-linear-gradient(0deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 34px);
   }
@@ -261,7 +244,7 @@
 
   @media (min-width: 480px) {
     .wrap { padding-top: 80px; }
-    .wordmark { font-size: 2.8rem; }
+    .lockup img { max-width: 340px; }
   }
 </style>
 </head>
@@ -270,9 +253,7 @@
 <div class="wrap">
 
   <header class="lockup reveal">
-    <img src="assets/img/logo.png" alt="Adega MM">
-    <h1 class="wordmark">Adega MM</h1>
-    <p class="sub-mark">Bebidas &amp; Tabacaria</p>
+    <img src="assets/img/lockup.jpg" alt="Adega MM — Distribuidora de Bebidas">
     <hr class="rule">
     <p class="tagline">Cerveja gelada, doses e combos<br>pra sua night</p>
   </header>

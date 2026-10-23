@@ -1,19 +1,19 @@
-/* Cores e tipografia tiradas do cardápio oficial da Adega MM: laranja
-   vibrante, preto e um script encorpado nos títulos. */
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap');
+/* Cores e tipografia da identidade nova da Adega MM: preto quase puro,
+   laranja forte e uma caixa-alta condensada bem robusta nos títulos. */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --orange: #fa7d27;
-  --orange-light: #ff9a4d;
-  --orange-dim: #c9601a;
-  --black: #141110;
-  --black-soft: #1d1815;
-  --card: #241d18;
-  --border: #3a2e24;
-  --rule: #362a21;
+  --orange: #f4500a;
+  --orange-light: #ff8a4a;
+  --orange-dim: #b53c08;
+  --black: #090602;
+  --black-soft: #140e09;
+  --card: #1f1811;
+  --border: #3d2c1e;
+  --rule: #302216;
   --text: #f7ede2;
-  --text-dim: #c2ab97;
-  --display: 'Pacifico', cursive;
+  --text-dim: #c2a98f;
+  --display: 'Anton', 'Arial Narrow', sans-serif;
   --max-width: 720px;
 }
 
@@ -39,7 +39,7 @@ a { color: inherit; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(20, 17, 16, 0.96);
+  background: rgba(9, 6, 2, 0.96);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--border);
 }
@@ -61,17 +61,17 @@ a { color: inherit; }
 }
 
 .brand-logo {
-  width: 36px;
+  width: 38px;
   height: auto;
-  border-radius: 50%;
 }
 
 .brand-text {
   font-family: var(--display);
   font-weight: 400;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   color: var(--orange);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   line-height: 1;
 }
 
@@ -116,63 +116,35 @@ a { color: inherit; }
   border-color: var(--orange);
 }
 
-/* Hero */
+/* Hero: a arte da logo nova (ADEGA + hexágono MM + DISTRIBUIDORA DE
+   BEBIDAS) já carrega a marca inteira, então o hero só a exibe por cima
+   do preto de fundo, sem recorte nem gradiente laranja por trás. */
 .hero {
   position: relative;
-  height: 40vh;
-  min-height: 230px;
-  max-height: 360px;
-  overflow: hidden;
   background:
-    radial-gradient(120% 140% at 50% 0%, var(--orange-light) 0%, var(--orange) 45%, var(--orange-dim) 100%);
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(20,17,16,0.05) 0%, rgba(20,17,16,0.35) 55%, var(--black) 100%);
-}
-
-.hero-overlay {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+    radial-gradient(70% 90% at 50% 20%, rgba(244,80,10,0.14) 0%, transparent 65%),
+    var(--black);
+  padding: 38px 20px 30px;
   text-align: center;
-  padding-bottom: 22px;
 }
 
-.hero-logo {
-  width: 76px;
-  margin-bottom: 10px;
-  border-radius: 50%;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+.hero-lockup {
+  width: 72%;
+  max-width: 320px;
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 14px 34px rgba(244, 80, 10, 0.25));
 }
 
-.hero-overlay h1 {
-  margin: 0;
+.hero-title {
+  margin: 14px 0 0;
   font-family: var(--display);
   font-weight: 400;
-  font-size: 2.4rem;
-  color: var(--text);
-  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-.hero-overlay p {
-  margin: 6px 0 0;
-  color: var(--black);
-  background: var(--text);
-  padding: 3px 12px;
-  border-radius: 20px;
-  letter-spacing: 3px;
-  text-indent: 3px;
-  font-size: 0.68rem;
-  font-weight: 600;
+  font-size: 1.7rem;
+  letter-spacing: 5px;
+  text-indent: 5px;
   text-transform: uppercase;
+  color: var(--orange);
 }
 
 /* Search */
@@ -223,8 +195,9 @@ main {
 .section-title {
   font-family: var(--display);
   font-weight: 400;
-  font-size: 1.9rem;
-  letter-spacing: 0.5px;
+  font-size: 1.7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   color: var(--orange);
   border-bottom: 1px solid var(--orange);
   padding-bottom: 10px;
@@ -412,7 +385,6 @@ main {
 .footer-logo {
   width: 48px;
   margin: 0 auto 10px;
-  border-radius: 50%;
 }
 
 .footer-name {
@@ -420,6 +392,8 @@ main {
   color: var(--orange);
   font-weight: 400;
   font-size: 1.3rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   margin: 0 0 8px;
 }
 
@@ -710,16 +684,16 @@ body.cart-open { overflow: hidden; }
     letter-spacing: 0.3px;
   }
 
-  .hero-overlay h1 { font-size: 2rem; }
+  .hero-title { font-size: 1.4rem; letter-spacing: 3px; text-indent: 3px; }
 }
 
-/* Abertura: o preto some, o laranja entra e o logo assenta — o mesmo ritmo
-   da capa do cardápio impresso. Termina sozinha mesmo se o script falhar. */
+/* Abertura: preto de fundo com o hexágono acendendo em laranja, igual à
+   arte da logo. Termina sozinha mesmo se o script falhar. */
 .welcome {
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: var(--orange);
+  background: var(--black);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -751,7 +725,9 @@ body.cart-open { overflow: hidden; }
   font-family: var(--display);
   font-weight: 400;
   font-size: 2rem;
-  color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text);
   opacity: 0;
   animation: wl-word 0.85s cubic-bezier(0.2, 0.72, 0.2, 1) 0.32s forwards;
 }
@@ -763,10 +739,7 @@ body.cart-open { overflow: hidden; }
 
 .welcome p {
   margin: 0;
-  color: var(--black);
-  background: rgba(20,17,16,0.12);
-  padding: 4px 14px;
-  border-radius: 20px;
+  color: var(--orange);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.3em;
