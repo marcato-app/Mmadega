@@ -663,6 +663,29 @@ main {
 
 body.cart-open { overflow: hidden; }
 
+/* Produto esgotado: continua no cardápio, mas sem botão de pedir. */
+.item.is-sold-out .item-name,
+.item.is-sold-out .item-price { opacity: 0.45; }
+.item.is-sold-out .item-price { text-decoration: line-through; }
+
+.sold-out-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 9px;
+  white-space: nowrap;
+}
+
+/* /loja: cardápio do QR da loja física, só pra consulta. */
+.modo-loja .cart-bar,
+.modo-loja .cart-overlay,
+.modo-loja .cart-drawer { display: none !important; }
+.modo-loja .back-to-top { bottom: 18px; }
+
 /* Mobile nav: a faixa de categorias rola horizontalmente para caber tudo
    numa tela de celular sem esconder nada atrás de um botão. */
 @media (max-width: 480px) {

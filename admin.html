@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel | Adega MM</title>
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600&display=swap">
+<style>
+  :root {
+    --orange: #f4500a;
+    --orange-light: #ff8a4a;
+    --black: #090602;
+    --panel: #140e09;
+    --panel-2: #1c140d;
+    --border: #3d2c1e;
+    --rule: #2a1f15;
+    --text: #f7ede2;
+    --text-dim: #b9a28b;
+    --ok: #3ccf78;
+    --danger: #ff5d4d;
+    --display: 'Anton', 'Arial Narrow', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+  [hidden] { display: none !important; }
+  button, input, textarea { font: inherit; color: inherit; }
+  a { color: var(--orange-light); }
+
+  /* ---------- login ---------- */
+  .login {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+  }
+  .login form {
+    width: 100%;
+    max-width: 340px;
+    display: grid;
+    gap: 14px;
+    text-align: center;
+  }
+  .login img { width: 92px; margin: 0 auto 4px; display: block; }
+  .login h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.6rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin: 0 0 6px;
+  }
+
+  /* ---------- campos e botões ---------- */
+  label.field { display: grid; gap: 6px; text-align: left; }
+  label.field > span { font-size: 0.8rem; font-weight: 500; color: var(--text-dim); }
+  label.field small { font-size: 0.74rem; color: var(--text-dim); opacity: 0.8; font-weight: 300; }
+  input[type=text], input[type=password], input[type=search], input:not([type]), textarea {
+    width: 100%;
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 13px;
+    font-size: 16px; /* evita o zoom automático do iOS */
+    outline: none;
+  }
+  textarea { resize: vertical; min-height: 64px; }
+  input:focus, textarea:focus { border-color: var(--orange); }
+  .check { display: flex; align-items: center; gap: 9px; font-size: 0.92rem; cursor: pointer; }
+  .check input { width: 18px; height: 18px; accent-color: var(--orange); }
+
+  .btn {
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    border-radius: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    line-height: 1.1;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:hover { border-color: var(--orange); }
+  .btn.primary { background: var(--orange); border-color: var(--orange); color: var(--black); font-weight: 600; }
+  .btn.danger { color: var(--danger); }
+  .btn.ghost { background: transparent; }
+  .btn.small { padding: 7px 10px; font-size: 0.82rem; }
+  .btn.icon { width: 36px; height: 36px; padding: 0; display: inline-grid; place-items: center; font-size: 1rem; }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+  .error { color: var(--danger); font-size: 0.86rem; min-height: 1.2em; margin: 0; }
+  :focus-visible { outline: 2px solid var(--orange-light); outline-offset: 2px; }
+
+  /* ---------- topo e abas ---------- */
+  .top {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(9, 6, 2, 0.96);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .top-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .top-inner img { width: 34px; }
+  .top-inner strong {
+    font-family: var(--display);
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-size: 1.05rem;
+    flex: 1;
+  }
+  .tabs {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 12px 10px;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs button {
+    flex: 1 0 auto;
+    border: 1px solid var(--border);
+    background: transparent;
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .tabs button[aria-selected=true] { background: var(--orange); border-color: var(--orange); color: var(--black); font-weight: 600; }
+
+  main { max-width: 760px; margin: 0 auto; padding: 18px 16px 120px; }
+  .panel-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.35rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 4px 0 4px;
+  }
+  .hint { color: var(--text-dim); font-size: 0.85rem; margin: 0 0 16px; line-height: 1.5; }
+
+  /* ---------- cardápio ---------- */
+  .toolbar { display: flex; gap: 8px; margin-bottom: 14px; }
+  .toolbar input { flex: 1; }
+
+  .sec {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--panel);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .sec-head { display: flex; align-items: center; gap: 4px; padding: 6px 8px 6px 4px; }
+  .sec-toggle {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    background: none;
+    border: 0;
+    text-align: left;
+    padding: 10px 8px;
+    cursor: pointer;
+  }
+  .sec-toggle .caret { color: var(--orange); transition: transform 0.2s; display: inline-block; width: 12px; }
+  .sec.open .sec-toggle .caret { transform: rotate(90deg); }
+  .sec-toggle .name {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+  .sec-toggle .count { font-size: 0.75rem; color: var(--text-dim); }
+  .sec-body { padding: 0 12px 12px; border-top: 1px solid var(--rule); }
+
+  .grp { margin-top: 14px; }
+  .grp-head { display: flex; align-items: center; gap: 4px; }
+  .grp-head h3 {
+    flex: 1;
+    margin: 0;
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--orange-light);
+  }
+  .grp-note { margin: 4px 0 0; font-size: 0.8rem; color: var(--text-dim); font-style: italic; }
+
+  .items { list-style: none; margin: 8px 0 0; padding: 0; }
+  .it { border-bottom: 1px solid var(--rule); }
+  .it:last-child { border-bottom: 0; }
+  .it-row { display: flex; align-items: center; gap: 8px; }
+  .it-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    background: none;
+    border: 0;
+    padding: 11px 2px;
+    text-align: left;
+    cursor: pointer;
+  }
+  .it-name { font-weight: 500; overflow-wrap: anywhere; }
+  .it-name small { color: var(--text-dim); font-weight: 300; }
+  .it-price { color: var(--orange-light); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .it.is-hidden .it-name, .it.is-hidden .it-price { opacity: 0.4; }
+  .it.is-sold .it-price { text-decoration: line-through; opacity: 0.6; }
+  .badge {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    margin-left: 6px;
+    white-space: nowrap;
+  }
+  .soldout-toggle {
+    flex: 0 0 auto;
+    border: 1px solid var(--border);
+    background: transparent;
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+  }
+  .soldout-toggle { min-width: 92px; color: var(--ok); border-color: rgba(60, 207, 120, 0.35); }
+  .soldout-toggle.on { background: var(--danger); border-color: var(--danger); color: var(--black); }
+
+  .editor {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin: 4px 0 12px;
+    display: grid;
+    gap: 12px;
+  }
+  .editor .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .editor .checks { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  .editor .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .editor .actions .spacer { flex: 1; }
+  .add-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* ---------- formulários e links ---------- */
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--panel);
+    padding: 16px;
+    display: grid;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .link-row { display: grid; gap: 6px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .link-row:last-child { border-bottom: 0; padding-bottom: 0; }
+  .link-row:first-child { padding-top: 0; }
+  .link-row strong { font-weight: 600; }
+  .link-row p { margin: 0; font-size: 0.82rem; color: var(--text-dim); }
+  .link-row code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85rem;
+    color: var(--orange-light);
+    overflow-wrap: anywhere;
+  }
+  .link-row .actions { display: flex; gap: 8px; }
+  .qr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .qr-card { text-align: center; display: grid; gap: 10px; justify-items: center; }
+  .qr-card canvas { width: 100%; max-width: 230px; height: auto; border-radius: 10px; background: #fff; }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    transform: translate(-50%, 20px);
+    background: var(--ok);
+    color: #04130a;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 30px;
+    padding: 11px 18px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    max-width: calc(100% - 32px);
+    text-align: center;
+    z-index: 50;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast.err { background: var(--danger); color: #1a0402; }
+
+  .empty { color: var(--text-dim); text-align: center; padding: 30px 0; }
+
+  @media (max-width: 420px) {
+    .editor .two { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="login" id="loginView" hidden>
+  <form id="loginForm" autocomplete="on">
+    <img src="assets/img/logo.png" alt="">
+    <h1>Painel da Adega</h1>
+    <label class="field"><span>Usuário</span>
+      <input id="loginUser" name="username" autocomplete="username" autocapitalize="none" required>
+    </label>
+    <label class="field"><span>Senha</span>
+      <input id="loginPass" name="password" type="password" autocomplete="current-password" required>
+    </label>
+    <p class="error" id="loginError"></p>
+    <button class="btn primary" type="submit">Entrar</button>
+  </form>
+</div>
+
+<div id="appView" hidden>
+  <header class="top">
+    <div class="top-inner">
+      <img src="assets/img/logo.png" alt="">
+      <strong>Painel</strong>
+      <a class="btn small ghost" href="/" target="_blank" rel="noopener">Ver site</a>
+      <button class="btn small ghost" id="logoutBtn" type="button">Sair</button>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="menu" aria-selected="true">Cardápio</button>
+      <button type="button" role="tab" data-tab="store" aria-selected="false">Loja</button>
+      <button type="button" role="tab" data-tab="links" aria-selected="false">Links e QR</button>
+      <button type="button" role="tab" data-tab="account" aria-selected="false">Conta</button>
+    </nav>
+  </header>
+
+  <main>
+    <section data-panel="menu">
+      <h2 class="panel-title">Cardápio</h2>
+      <p class="hint">Toque num produto pra editar. O botão ao lado alterna entre <strong>Disponível</strong> e <strong>Esgotado</strong> (esgotado continua no cardápio, mas sem botão de pedir).</p>
+      <div class="toolbar">
+        <input type="search" id="menuSearch" placeholder="Buscar produto…" aria-label="Buscar produto">
+      </div>
+      <div id="menuList"><p class="empty">Carregando…</p></div>
+      <div class="add-row"><button class="btn" type="button" id="addSection">+ Nova seção</button></div>
+    </section>
+
+    <section data-panel="store" hidden>
+      <h2 class="panel-title">Informações da loja</h2>
+      <p class="hint">O que aparece na página inicial (bio) e no cardápio.</p>
+      <form id="storeForm" class="card"></form>
+    </section>
+
+    <section data-panel="links" hidden>
+      <h2 class="panel-title">Links e QR</h2>
+      <p class="hint">Copie os links ou baixe o QR já pronto pra imprimir.</p>
+      <div class="card" id="linkList"></div>
+      <div class="qr-grid" id="qrGrid"></div>
+    </section>
+
+    <section data-panel="account" hidden>
+      <h2 class="panel-title">Conta</h2>
+      <p class="hint">Entrou como <strong id="whoami"></strong>.</p>
+      <form id="passForm" class="card">
+        <strong>Trocar senha</strong>
+        <label class="field"><span>Senha atual</span>
+          <input type="password" id="passCurrent" autocomplete="current-password" required></label>
+        <label class="field"><span>Nova senha</span><small>Pelo menos 8 caracteres.</small>
+          <input type="password" id="passNext" autocomplete="new-password" minlength="8" required></label>
+        <label class="field"><span>Repita a nova senha</span>
+          <input type="password" id="passNext2" autocomplete="new-password" minlength="8" required></label>
+        <p class="error" id="passError"></p>
+        <button class="btn primary" type="submit">Salvar nova senha</button>
+      </form>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+
+  function h(tag, props) {
+    var e = document.createElement(tag);
+    for (var k in props || {}) {
+      var v = props[k];
+      if (v == null || v === false) continue;
+      if (k === 'class') e.className = v;
+      else if (k === 'text') e.textContent = v;
+      else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), v);
+      else if (k in e && typeof v !== 'string') e[k] = v;
+      else e.setAttribute(k, v === true ? '' : v);
+    }
+    for (var i = 2; i < arguments.length; i++) {
+      [].concat(arguments[i]).forEach(function (c) {
+        if (c == null || c === false) return;
+        e.appendChild(c.nodeType ? c : document.createTextNode(String(c)));
+      });
+    }
+    return e;
+  }
+
+  var toastTimer;
+  function toast(msg, isError) {
+    var t = $('#toast');
+    t.textContent = msg;
+    t.classList.toggle('err', !!isError);
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('show'); }, isError ? 4200 : 2200);
+  }
+
+  function api(method, path, body) {
+    return fetch(path, {
+      method: method,
+      credentials: 'same-origin',
+      headers: body ? { 'Content-Type': 'application/json' } : {},
+      body: body ? JSON.stringify(body) : undefined
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (res.status === 401 && path !== '/api/admin/login') {
+          showLogin();
+          throw new Error('Sua sessão expirou. Entre de novo.');
+        }
+        if (!res.ok) throw new Error(data.error || 'Não foi possível concluir. Tente de novo.');
+        return data;
+      });
+    });
+  }
+
+  function fail(err) { toast(err.message, true); }
+
+  function norm(s) {
+    return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  }
+
+  /* ------------------------------ login ------------------------------ */
+
+  function showLogin() {
+    $('#appView').hidden = true;
+    $('#loginView').hidden = false;
+    $('#loginUser').focus();
+  }
+
+  function showApp(username) {
+    $('#loginView').hidden = true;
+    $('#appView').hidden = false;
+    $('#whoami').textContent = username;
+    loadMenu();
+    loadSettings();
+  }
+
+  $('#loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    $('#loginError').textContent = '';
+    var btn = e.submitter || this.querySelector('button');
+    btn.disabled = true;
+    api('POST', '/api/admin/login', { username: $('#loginUser').value, password: $('#loginPass').value })
+      .then(function (d) { $('#loginPass').value = ''; showApp(d.username); })
+      .catch(function (err) { $('#loginError').textContent = err.message; })
+      .then(function () { btn.disabled = false; });
+  });
+
+  $('#logoutBtn').addEventListener('click', function () {
+    api('POST', '/api/admin/logout').catch(function () {}).then(showLogin);
+  });
+
+  /* ------------------------------ abas ------------------------------ */
+
+  Array.prototype.forEach.call(document.querySelectorAll('.tabs button'), function (tab) {
+    tab.addEventListener('click', function () {
+      Array.prototype.forEach.call(document.querySelectorAll('.tabs button'), function (t) {
+        t.setAttribute('aria-selected', String(t === tab));
+      });
+      Array.prototype.forEach.call(document.querySelectorAll('[data-panel]'), function (p) {
+        p.hidden = p.getAttribute('data-panel') !== tab.getAttribute('data-tab');
+      });
+      if (tab.getAttribute('data-tab') === 'links') renderLinks();
+      window.scrollTo(0, 0);
+    });
+  });
+
+  /* ---------------------------- cardápio ---------------------------- */
+
+  var menu = [];
+  var openSections = {};
+  var editing = null; // id do produto aberto, ou 'new:<groupId>'
+  var query = '';
+
+  function loadMenu() {
+    return api('GET', '/api/admin/menu').then(function (d) {
+      menu = d.sections;
+      renderMenu();
+    }).catch(fail);
+  }
+
+  function itemMatches(it, q) {
+    return norm(it.name + ' ' + it.unit + ' ' + it.note).indexOf(q) !== -1;
+  }
+
+  function moveBtn(kind, id, dir) {
+    return h('button', {
+      class: 'btn icon ghost', type: 'button', title: dir === 'up' ? 'Subir' : 'Descer',
+      'aria-label': dir === 'up' ? 'Subir' : 'Descer',
+      onclick: function (e) {
+        e.stopPropagation();
+        api('PUT', '/api/admin/' + kind + '/' + encodeURIComponent(id) + '/move', { direction: dir })
+          .then(loadMenu).catch(fail);
+      }
+    }, dir === 'up' ? '↑' : '↓');
+  }
+
+  function renderMenu() {
+    var root = $('#menuList');
+    var q = norm(query.trim());
+    root.replaceChildren();
+    if (!menu.length) root.appendChild(h('p', { class: 'empty', text: 'Nenhuma seção ainda. Crie a primeira abaixo.' }));
+
+    menu.forEach(function (s) {
+      var total = s.groups.reduce(function (n, g) { return n + g.items.length; }, 0);
+      var groups = s.groups.map(function (g) {
+        return { g: g, items: q ? g.items.filter(function (it) { return itemMatches(it, q); }) : g.items };
+      }).filter(function (x) { return !q || x.items.length || norm(x.g.title).indexOf(q) !== -1; });
+      if (q && !groups.length) return;
+
+      var isOpen = q ? true : !!openSections[s.id];
+      var sec = h('div', { class: 'sec' + (isOpen ? ' open' : '') },
+        h('div', { class: 'sec-head' },
+          h('button', {
+            class: 'sec-toggle', type: 'button', 'aria-expanded': String(isOpen),
+            onclick: function () { openSections[s.id] = !openSections[s.id]; renderMenu(); }
+          },
+            h('span', { class: 'caret', 'aria-hidden': 'true' }, '▸'),
+            h('span', { class: 'name', text: s.title }),
+            h('span', { class: 'count', text: total + (total === 1 ? ' produto' : ' produtos') })
+          ),
+          moveBtn('sections', s.id, 'up'),
+          moveBtn('sections', s.id, 'down')
+        )
+      );
+
+      if (isOpen) {
+        var body = h('div', { class: 'sec-body' });
+        groups.forEach(function (x) { body.appendChild(renderGroup(s, x.g, x.items)); });
+        body.appendChild(h('div', { class: 'add-row' },
+          h('button', { class: 'btn small', type: 'button', onclick: function () { addGroup(s); } }, '+ Novo grupo'),
+          h('button', { class: 'btn small ghost', type: 'button', onclick: function () { renameSection(s); } }, 'Renomear seção'),
+          h('button', { class: 'btn small ghost danger', type: 'button', onclick: function () { deleteSection(s, total); } }, 'Excluir seção')
+        ));
+        sec.appendChild(body);
+      }
+      root.appendChild(sec);
+    });
+
+    if (q && !root.children.length) root.appendChild(h('p', { class: 'empty', text: 'Nenhum produto encontrado.' }));
+  }
+
+  function renderGroup(section, g, items) {
+    var list = h('ul', { class: 'items' });
+    items.forEach(function (it) { list.appendChild(renderItem(g, it)); });
+    if (editing === 'new:' + g.id) list.appendChild(h('li', null, itemEditor(g, null)));
+
+    return h('div', { class: 'grp' },
+      h('div', { class: 'grp-head' },
+        h('h3', { text: g.title }),
+        moveBtn('groups', g.id, 'up'),
+        moveBtn('groups', g.id, 'down')
+      ),
+      g.note ? h('p', { class: 'grp-note', text: g.note }) : null,
+      list,
+      h('div', { class: 'add-row' },
+        h('button', { class: 'btn small', type: 'button', onclick: function () { editing = 'new:' + g.id; renderMenu(); } }, '+ Produto'),
+        h('button', { class: 'btn small ghost', type: 'button', onclick: function () { editGroup(g); } }, 'Editar grupo'),
+        h('button', { class: 'btn small ghost danger', type: 'button', onclick: function () { deleteGroup(g); } }, 'Excluir grupo')
+      )
+    );
+  }
+
+  function itemPayload(it, changes) {
+    var p = { name: it.name, unit: it.unit, price: it.price, note: it.note, sold_out: it.sold_out, hidden: it.hidden };
+    for (var k in changes) p[k] = changes[k];
+    return p;
+  }
+
+  function renderItem(g, it) {
+    var li = h('li', { class: 'it' + (it.hidden ? ' is-hidden' : '') + (it.sold_out ? ' is-sold' : '') },
+      h('div', { class: 'it-row' },
+        h('button', {
+          class: 'it-main', type: 'button', 'aria-expanded': String(editing === it.id),
+          onclick: function () { editing = editing === it.id ? null : it.id; renderMenu(); }
+        },
+          h('span', { class: 'it-name' }, it.name, it.unit ? h('small', null, ' ' + it.unit) : null,
+            it.hidden ? h('span', { class: 'badge', text: 'Oculto' }) : null),
+          h('span', { class: 'it-price', text: it.price })
+        ),
+        h('button', {
+          class: 'soldout-toggle' + (it.sold_out ? ' on' : ''), type: 'button',
+          'aria-pressed': String(!!it.sold_out),
+          title: it.sold_out ? 'Toque pra voltar a vender' : 'Toque se acabou o estoque',
+          onclick: function () {
+            api('PUT', '/api/admin/items/' + encodeURIComponent(it.id), itemPayload(it, { sold_out: !it.sold_out }))
+              .then(function () { toast(it.sold_out ? 'Disponível de novo' : 'Marcado como esgotado'); return loadMenu(); })
+              .catch(fail);
+          }
+        }, it.sold_out ? 'Esgotado' : 'Disponível')
+      )
+    );
+    if (editing === it.id) li.appendChild(itemEditor(g, it));
+    return li;
+  }
+
+  function itemEditor(g, it) {
+    var isNew = !it;
+    it = it || { name: '', unit: '', price: '', note: '', sold_out: false, hidden: false };
+    var f = {
+      name: h('input', { value: it.name, maxlength: '120', placeholder: 'Ex: Heineken' }),
+      unit: h('input', { value: it.unit, maxlength: '40', placeholder: 'Ex: 350ml, 1L, 12 und' }),
+      price: h('input', { value: String(it.price).replace(/^R\$\s*/, ''), inputmode: 'decimal', placeholder: '0,00' }),
+      note: h('textarea', { maxlength: '300', rows: '2', placeholder: 'Opcional — aparece embaixo do nome' }),
+      sold_out: h('input', { type: 'checkbox', checked: !!it.sold_out }),
+      hidden: h('input', { type: 'checkbox', checked: !!it.hidden })
+    };
+    f.note.value = it.note || '';
+
+    function save(e) {
+      e.preventDefault();
+      var data = {
+        name: f.name.value, unit: f.unit.value, price: f.price.value, note: f.note.value,
+        sold_out: f.sold_out.checked, hidden: f.hidden.checked
+      };
+      var req = isNew
+        ? api('POST', '/api/admin/items', Object.assign({ groupId: g.id }, data))
+        : api('PUT', '/api/admin/items/' + encodeURIComponent(it.id), data);
+      req.then(function () {
+        toast(isNew ? 'Produto adicionado' : 'Produto salvo');
+        editing = null;
+        return loadMenu();
+      }).catch(fail);
+    }
+
+    var actions = h('div', { class: 'actions' },
+      h('button', { class: 'btn primary', type: 'submit' }, isNew ? 'Adicionar' : 'Salvar'),
+      h('button', { class: 'btn ghost', type: 'button', onclick: function () { editing = null; renderMenu(); } }, 'Cancelar'),
+      h('span', { class: 'spacer' }),
+      isNew ? null : moveBtn('items', it.id, 'up'),
+      isNew ? null : moveBtn('items', it.id, 'down'),
+      isNew ? null : h('button', {
+        class: 'btn danger', type: 'button', onclick: function () {
+          if (!confirm('Excluir "' + it.name + '" do cardápio?')) return;
+          api('DELETE', '/api/admin/items/' + encodeURIComponent(it.id))
+            .then(function () { toast('Produto excluído'); editing = null; return loadMenu(); }).catch(fail);
+        }
+      }, 'Excluir')
+    );
+
+    var form = h('form', { class: 'editor', onsubmit: save },
+      h('label', { class: 'field' }, h('span', null, 'Nome'), f.name),
+      h('div', { class: 'two' },
+        h('label', { class: 'field' }, h('span', null, 'Tamanho / unidade'), f.unit),
+        h('label', { class: 'field' }, h('span', null, 'Preço (R$)'), f.price)
+      ),
+      h('label', { class: 'field' }, h('span', null, 'Descrição'), f.note),
+      h('div', { class: 'checks' },
+        h('label', { class: 'check' }, f.sold_out, 'Esgotado'),
+        h('label', { class: 'check' }, f.hidden, 'Ocultar do cardápio')
+      ),
+      actions
+    );
+    setTimeout(function () { (isNew ? f.name : f.price).focus(); }, 0);
+    return form;
+  }
+
+  function addGroup(s) {
+    var title = prompt('Nome do novo grupo em "' + s.title + '" (ex: Latas, Long Neck):');
+    if (!title || !title.trim()) return;
+    api('POST', '/api/admin/groups', { sectionId: s.id, title: title })
+      .then(function () { toast('Grupo criado'); return loadMenu(); }).catch(fail);
+  }
+
+  function editGroup(g) {
+    var title = prompt('Nome do grupo:', g.title);
+    if (title === null) return;
+    var note = prompt('Observação que aparece embaixo do nome do grupo (deixe vazio pra não ter):', g.note || '');
+    if (note === null) return;
+    api('PUT', '/api/admin/groups/' + encodeURIComponent(g.id), { title: title, note: note })
+      .then(function () { toast('Grupo salvo'); return loadMenu(); }).catch(fail);
+  }
+
+  function deleteGroup(g) {
+    var n = g.items.length;
+    if (!confirm('Excluir o grupo "' + g.title + '"' + (n ? ' e os ' + n + ' produtos dentro dele' : '') + '?')) return;
+    api('DELETE', '/api/admin/groups/' + encodeURIComponent(g.id))
+      .then(function () { toast('Grupo excluído'); return loadMenu(); }).catch(fail);
+  }
+
+  function renameSection(s) {
+    var title = prompt('Nome da seção:', s.title);
+    if (title === null) return;
+    api('PUT', '/api/admin/sections/' + encodeURIComponent(s.id), { title: title })
+      .then(function () { toast('Seção salva'); return loadMenu(); }).catch(fail);
+  }
+
+  function deleteSection(s, total) {
+    if (!confirm('Excluir a seção "' + s.title + '"' + (total ? ' com todos os ' + total + ' produtos dela' : '') + '? Não dá pra desfazer.')) return;
+    api('DELETE', '/api/admin/sections/' + encodeURIComponent(s.id))
+      .then(function () { toast('Seção excluída'); return loadMenu(); }).catch(fail);
+  }
+
+  $('#addSection').addEventListener('click', function () {
+    var title = prompt('Nome da nova seção (ex: Petiscos):');
+    if (!title || !title.trim()) return;
+    api('POST', '/api/admin/sections', { title: title }).then(function (d) {
+      openSections[d.id] = true;
+      toast('Seção criada');
+      return loadMenu();
+    }).catch(fail);
+  });
+
+  $('#menuSearch').addEventListener('input', function () { query = this.value; renderMenu(); });
+
+  /* ------------------------------- loja ------------------------------- */
+
+  var FIELDS = [
+    ['store_name', 'Nome da loja', ''],
+    ['store_subtitle', 'Subtítulo', 'Aparece embaixo do nome no topo do cardápio.'],
+    ['tagline', 'Frase da página inicial', ''],
+    ['hours', 'Horário de funcionamento', 'Ex: Seg a Sáb, 10h às 23h. Vazio = não aparece.'],
+    ['whatsapp', 'WhatsApp que recebe os pedidos', 'DDD + número, só números. Ex: 11983463846'],
+    ['instagram', 'Instagram', 'Só o usuário, sem @.'],
+    ['address', 'Endereço', 'Usado no botão "Como chegar" e no mapa.'],
+    ['menu_title', 'Título do cardápio', ''],
+    ['menu_footer', 'Aviso no rodapé do cardápio', ''],
+    ['order_greeting', 'Mensagem que abre o pedido no WhatsApp', 'Vem antes da lista de produtos.', true]
+  ];
+  var settings = {};
+
+  function loadSettings() {
+    return api('GET', '/api/settings').then(function (d) {
+      settings = d.settings;
+      renderStoreForm();
+    }).catch(fail);
+  }
+
+  function renderStoreForm() {
+    var form = $('#storeForm');
+    form.replaceChildren();
+    FIELDS.forEach(function (f) {
+      var input = f[3]
+        ? h('textarea', { name: f[0], rows: '2', maxlength: '300' })
+        : h('input', { name: f[0], maxlength: '300', inputmode: f[0] === 'whatsapp' ? 'tel' : null });
+      input.value = settings[f[0]] || '';
+      form.appendChild(h('label', { class: 'field' }, h('span', null, f[1]), f[2] ? h('small', null, f[2]) : null, input));
+    });
+    form.appendChild(h('button', { class: 'btn primary', type: 'submit' }, 'Salvar informações'));
+  }
+
+  $('#storeForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = {};
+    FIELDS.forEach(function (f) { data[f[0]] = this.elements[f[0]].value; }, this);
+    api('PUT', '/api/admin/settings', data).then(function (d) {
+      settings = d.settings;
+      renderStoreForm();
+      toast('Informações salvas');
+    }).catch(fail);
+  });
+
+  /* ---------------------------- links e QR ---------------------------- */
+
+  function links() {
+    var o = location.origin;
+    return [
+      { title: 'Link da bio', desc: 'Pra colocar no Instagram.', url: o + '/' },
+      { title: 'Cardápio com pedido pelo WhatsApp', desc: 'O cliente monta o carrinho e manda o pedido pronto.', url: o + '/cardapio', qr: 'qr-cardapio-whatsapp.png' },
+      { title: 'Cardápio da loja (QR)', desc: 'Só pra consulta, sem carrinho — pro QR no balcão e nas mesas.', url: o + '/loja', qr: 'qr-cardapio-loja.png' },
+      { title: 'Painel de edição', desc: 'Este painel. Não divulgue.', url: o + '/admin' }
+    ];
+  }
+
+  function copy(text) {
+    var done = function () { toast('Link copiado'); };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, function () { prompt('Copie o link:', text); });
+    } else {
+      prompt('Copie o link:', text);
+    }
+  }
+
+  function qrCanvas(url, label) {
+    var size = 520, pad = 44, foot = 104;
+    var tmp = document.createElement('div');
+    new QRCode(tmp, { text: url, width: size, height: size, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+    var src = tmp.querySelector('canvas');
+    var c = document.createElement('canvas');
+    c.width = size + pad * 2;
+    c.height = size + pad * 2 + foot;
+    var x = c.getContext('2d');
+    x.fillStyle = '#ffffff';
+    x.fillRect(0, 0, c.width, c.height);
+    x.drawImage(src, pad, pad);
+    x.textAlign = 'center';
+    x.fillStyle = '#111111';
+    x.font = '600 38px Poppins, Arial, sans-serif';
+    x.fillText(label, c.width / 2, size + pad + 54);
+    x.fillStyle = '#666666';
+    x.font = '26px Poppins, Arial, sans-serif';
+    x.fillText(url.replace(/^https?:\/\//, ''), c.width / 2, size + pad + 94);
+    return c;
+  }
+
+  function renderLinks() {
+    var list = $('#linkList');
+    var grid = $('#qrGrid');
+    list.replaceChildren();
+    grid.replaceChildren();
+    links().forEach(function (l) {
+      list.appendChild(h('div', { class: 'link-row' },
+        h('strong', { text: l.title }),
+        h('p', { text: l.desc }),
+        h('code', { text: l.url }),
+        h('div', { class: 'actions' },
+          h('button', { class: 'btn small', type: 'button', onclick: function () { copy(l.url); } }, 'Copiar'),
+          h('a', { class: 'btn small ghost', href: l.url, target: '_blank', rel: 'noopener' }, 'Abrir')
+        )
+      ));
+      if (!l.qr) return;
+      if (!window.QRCode) {
+        grid.appendChild(h('p', { class: 'hint', text: 'Não foi possível gerar o QR agora (sem internet?). Recarregue a página.' }));
+        return;
+      }
+      var canvas = qrCanvas(l.url, l.url.slice(-5) === '/loja' ? 'Cardápio' : 'Faça seu pedido');
+      grid.appendChild(h('div', { class: 'card qr-card' },
+        h('strong', { text: l.title }),
+        canvas,
+        h('a', { class: 'btn primary small', href: canvas.toDataURL('image/png'), download: l.qr }, 'Baixar QR (PNG)')
+      ));
+    });
+  }
+
+  /* ------------------------------- conta ------------------------------- */
+
+  $('#passForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var err = $('#passError');
+    err.textContent = '';
+    if ($('#passNext').value !== $('#passNext2').value) { err.textContent = 'As duas senhas novas não são iguais.'; return; }
+    api('POST', '/api/admin/password', { current: $('#passCurrent').value, next: $('#passNext').value })
+      .then(function () { e.target.reset(); toast('Senha trocada'); })
+      .catch(function (x) { err.textContent = x.message; });
+  });
+
+  /* ------------------------------- início ------------------------------- */
+
+  api('GET', '/api/admin/me').then(function (d) { showApp(d.username); }).catch(function () { showLogin(); });
+})();
+</script>
+</body>
+</html>

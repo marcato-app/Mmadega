@@ -81,6 +81,15 @@
     line-height: 1.55;
     color: var(--text-dim);
     letter-spacing: 0.015em;
+    text-wrap: balance;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+  .hours {
+    margin: 10px 0 0;
+    font-size: 0.82rem;
+    color: var(--orange-light);
+    letter-spacing: 0.04em;
   }
 
   nav {
@@ -255,11 +264,12 @@
   <header class="lockup reveal">
     <img src="assets/img/lockup.png" alt="Adega MM — Distribuidora de Bebidas">
     <hr class="rule">
-    <p class="tagline">Cerveja gelada, doses e combos<br>pra sua night</p>
+    <p class="tagline" data-s="tagline">Cerveja gelada, doses e combos pra sua night</p>
+    <p class="hours" data-s="hours" hidden></p>
   </header>
 
   <nav>
-    <a class="card primary reveal" href="cardapio.html">
+    <a class="card primary reveal" href="cardapio">
       <span class="icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <rect x="4.5" y="2.75" width="15" height="18.5" rx="2"/>
@@ -275,7 +285,7 @@
       </span>
     </a>
 
-    <a class="card reveal" href="https://wa.me/5511983463846" target="_blank" rel="noopener">
+    <a class="card reveal" id="linkWhatsapp" href="https://wa.me/5511983463846" target="_blank" rel="noopener">
       <span class="icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 3a9 9 0 0 0-7.75 13.5L3 21l4.65-1.22A9 9 0 1 0 12 3Z"/>
@@ -284,14 +294,14 @@
       </span>
       <span class="body">
         <span class="label">Fazer pedido</span>
-        <span class="meta">Chame no WhatsApp: (11) 98346-3846</span>
+        <span class="meta">Chame no WhatsApp: <span id="metaWhatsapp">(11) 98346-3846</span></span>
       </span>
       <span class="chev" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
       </span>
     </a>
 
-    <a class="card with-map reveal" href="https://www.google.com/maps/search/?api=1&amp;query=Rua+Principal%2C+12+-+Divineia" target="_blank" rel="noopener">
+    <a class="card with-map reveal" id="linkMaps" href="https://www.google.com/maps/search/?api=1&amp;query=Rua+Principal%2C+12+-+Divineia" target="_blank" rel="noopener">
       <span class="map-frame">
         <span class="map-fallback" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -317,7 +327,7 @@
         </span>
         <span class="body">
           <span class="label">Como chegar</span>
-          <span class="meta">Rua Principal, 12 — Divineia</span>
+          <span class="meta" data-s="address">Rua Principal, 12 — Divineia</span>
         </span>
         <span class="chev" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
@@ -325,7 +335,7 @@
       </span>
     </a>
 
-    <a class="card reveal" href="https://instagram.com/adegam.m" target="_blank" rel="noopener">
+    <a class="card reveal" id="linkInstagram" href="https://instagram.com/adegam.m" target="_blank" rel="noopener">
       <span class="icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="5"/>
@@ -335,7 +345,7 @@
       </span>
       <span class="body">
         <span class="label">Instagram</span>
-        <span class="meta">@adegam.m</span>
+        <span class="meta" id="metaInstagram">@adegam.m</span>
       </span>
       <span class="chev" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
@@ -345,13 +355,43 @@
 
 </div>
 
-<footer>Adega MM</footer>
+<footer data-s="store_name">Adega MM</footer>
 
 <script>
   (function () {
     var f = document.getElementById('mapFrame');
-    if (!f) return;
     f.addEventListener('load', function () { f.classList.add('is-ready'); });
+
+    function phone(d) {
+      d = String(d).replace(/\D/g, '').replace(/^55(?=\d{10,11}$)/, '');
+      return d.length === 11 ? '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7)
+           : d.length === 10 ? '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6) : d;
+    }
+
+    // Textos e links editáveis no /admin. Sem servidor (GitHub Pages) fica o
+    // que já está escrito no HTML.
+    fetch('/api/settings', { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+      .then(function (data) {
+        var s = data.settings;
+        document.title = s.store_name;
+        Array.prototype.forEach.call(document.querySelectorAll('[data-s]'), function (n) {
+          var v = s[n.getAttribute('data-s')];
+          if (v === undefined) return;
+          n.textContent = v;
+          if (n.hasAttribute('hidden') || !v) n.hidden = !v;
+        });
+        var wa = String(s.whatsapp).replace(/\D/g, '');
+        document.getElementById('linkWhatsapp').href = 'https://wa.me/' + (wa.length <= 11 ? '55' + wa : wa);
+        document.getElementById('metaWhatsapp').textContent = phone(wa);
+        document.getElementById('linkInstagram').href = 'https://instagram.com/' + encodeURIComponent(s.instagram);
+        document.getElementById('metaInstagram').textContent = '@' + s.instagram;
+        document.getElementById('linkInstagram').hidden = !s.instagram;
+        var q = encodeURIComponent(s.address);
+        document.getElementById('linkMaps').href = 'https://www.google.com/maps/search/?api=1&query=' + q;
+        if (f.dataset.q !== q) { f.dataset.q = q; f.src = 'https://maps.google.com/maps?q=' + q + '&z=16&output=embed'; }
+      })
+      .catch(function () {});
   })();
 </script>
 

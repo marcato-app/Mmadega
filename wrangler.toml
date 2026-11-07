@@ -1,0 +1,23 @@
+name = "adegamm"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Domínio próprio. adegamm.com.br (sem www) também aponta pra cá e o Worker
+# redireciona pro www.
+routes = [
+  { pattern = "www.adegamm.com.br", custom_domain = true },
+  { pattern = "adegamm.com.br", custom_domain = true },
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "adegamm-db"
+database_id = "PREENCHER_COM_O_ID_DO_D1"
+
+[assets]
+directory = "./"
+binding = "ASSETS"
+not_found_handling = "404-page"
+# O Worker passa na frente de tudo: precisa redirecionar o domínio sem www,
+# atender /api e servir /loja com o mesmo arquivo do /cardapio.
+run_worker_first = true
